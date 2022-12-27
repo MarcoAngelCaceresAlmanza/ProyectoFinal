@@ -2,18 +2,24 @@ import 'package:app_notas/models/nota.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class UserServices{
+ 
   Future<List<Nota>> getNotas()async{
-    List<Nota> misNotas;
-    misNotas= [
-    Nota(titulo: 'titulo 1',contenido: 'Contenido de la nota 1'),
-    Nota(titulo: 'titulo 2',contenido: 'Contenido de la nota 2'),
-    Nota(titulo: 'titulo 3',contenido: 'Contenido de la nota 3'),
-    Nota(titulo: 'titulo 4',contenido: 'Contenido de la nota 4')
-
-      ];
-      return  misNotas;
+    List<Nota> misNotas =[];
+      try{
+       final DataSnapshot snapshot =
+         (await FirebaseDatabase.instance.ref().child('notas').once()).snapshot;
+         
+       if(snapshot.exists){
+        
+         
+          print(snapshot.value);
+        
+       }
+        return misNotas;
+      }catch(e){
+        return misNotas;
+      }
   }
-
   Future<bool> saveNotas(String titulo, String contenido) async{
     try{
     await FirebaseDatabase.instance.ref()
@@ -25,6 +31,16 @@ class UserServices{
     );return true;
     }catch(e){
       print(e);
+      return false;
+    }
+  }
+
+  Future<bool>eliminarNota(String key) async{
+    try{
+      await FirebaseDatabase.instance.ref().child('notas').child(key).remove();
+      return true;
+
+    }catch(e){
       return false;
     }
   }

@@ -1,5 +1,7 @@
+import 'package:app_notas/services/appstate.dart';
 import 'package:app_notas/values/tema.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../services/userServies.dart';
 
@@ -60,7 +62,9 @@ class _ModalNuevaNotaState extends State<ModalNuevaNota> {
                   onPressed:()async{
 
                     if(_formularioKey.currentState!.validate()){
-                     bool respuesta=await UserServices().saveNotas(
+                     bool respuesta=await Provider.of<AppState>(context, listen: false)
+                     .saveNotas(
+                     //await UserServices().saveNotas(
                       _tituloController.text,
                       _contenidoController.text,
                      );
