@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     estado=Provider.of<AppState>(context,listen:true);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('App Notas'),
+          title: const Text('Bloc Notas'),
           
         ),
         floatingActionButton: FloatingActionButton(
